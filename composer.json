@@ -1,0 +1,19 @@
+{
+    "name": "garethmidwood/ticketing-reports",
+    "description": "A tool to generate reports from ticketing systems",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Gareth Midwood",
+            "email": "gareth.midwood@creode.co.uk"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "GarethMidwood\\": "GarethMidwood"
+        }
+    },
+    "require": {
+        "garethmidwood/codebasehq-php": "1.0.0"
+    }
+}

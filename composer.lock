@@ -1,0 +1,49 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "f9dab1443d84b43efbd7544d889fee65",
+    "content-hash": "8213e2092c1c565142c4c937e9f94209",
+    "packages": [
+        {
+            "name": "garethmidwood/codebasehq-php",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/garethmidwood/codebasehq-php.git",
+                "reference": "17b3c6d2dd25ff962aeb1edfdfa67308aec1bb0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/garethmidwood/codebasehq-php/zipball/17b3c6d2dd25ff962aeb1edfdfa67308aec1bb0b",
+                "reference": "17b3c6d2dd25ff962aeb1edfdfa67308aec1bb0b",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GarethMidwood\\": "GarethMidwood"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Gareth Midwood",
+                    "email": "gareth.midwood@creode.co.uk"
+                }
+            ],
+            "description": "A PHP library for the CodebaseHQ API",
+            "time": "2019-02-26 20:59:06"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
