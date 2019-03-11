@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f9dab1443d84b43efbd7544d889fee65",
-    "content-hash": "8213e2092c1c565142c4c937e9f94209",
+    "hash": "1ec983759114cd7c04012800e7476a5a",
+    "content-hash": "dd232bebd2dde870486ee2d822e85dc5",
     "packages": [
         {
             "name": "garethmidwood/codebasehq-php",
-            "version": "1.0.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/garethmidwood/codebasehq-php.git",
-                "reference": "17b3c6d2dd25ff962aeb1edfdfa67308aec1bb0b"
+                "reference": "b53587e8f2510d88e08d4995606e7d12a18e9de5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/garethmidwood/codebasehq-php/zipball/17b3c6d2dd25ff962aeb1edfdfa67308aec1bb0b",
-                "reference": "17b3c6d2dd25ff962aeb1edfdfa67308aec1bb0b",
+                "url": "https://api.github.com/repos/garethmidwood/codebasehq-php/zipball/b53587e8f2510d88e08d4995606e7d12a18e9de5",
+                "reference": "b53587e8f2510d88e08d4995606e7d12a18e9de5",
                 "shasum": ""
             },
             "type": "library",
@@ -35,7 +35,7 @@
                 }
             ],
             "description": "A PHP library for the CodebaseHQ API",
-            "time": "2019-02-26 20:59:06"
+            "time": "2019-03-11 21:51:38"
         }
     ],
     "packages-dev": [],

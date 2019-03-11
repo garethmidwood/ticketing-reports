@@ -4,7 +4,7 @@ namespace GarethMidwood\TicketReporting\System;
 
 use GarethMidwood\TicketReporting\System\Project;
 use GarethMidwood\TicketReporting\System\User;
-use GarethMidwood\TicketReporting\Time\Period;
+use GarethMidwood\TicketReporting\System\TimeSession\Period;
 
 
 interface System 

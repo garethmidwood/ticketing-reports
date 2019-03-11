@@ -2,13 +2,10 @@
 
 namespace GarethMidwood\TicketReporting\System\User;
 
-class Collection
-{
-    /**
-     * @var array
-     */
-    private $collection = [];
+use GarethMidwood\TicketReporting\Base\Collection as BaseCollection;
 
+class Collection extends BaseCollection
+{
     /**
      * Adds a user to the collection
      * @param User $user 
@@ -16,6 +13,6 @@ class Collection
      */
     public function addUser(User $user)
     {
-        $this->collection[] = $user;
+        $this->addItem($user->getId(), $user);
     }
 }

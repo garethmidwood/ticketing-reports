@@ -2,13 +2,10 @@
 
 namespace GarethMidwood\TicketReporting\System\Project;
 
-class Collection
-{
-    /**
-     * @var array
-     */
-    private $collection = [];
+use GarethMidwood\TicketReporting\Base\Collection as BaseCollection;
 
+class Collection extends BaseCollection
+{
     /**
      * Adds a project to the collection
      * @param Project $project 
@@ -16,6 +13,6 @@ class Collection
      */
     public function addProject(Project $project)
     {
-        $this->collection[] = $project;
+        $this->addItem($project->getId(), $project);
     }
 }

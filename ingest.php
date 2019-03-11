@@ -13,10 +13,10 @@ $codebaseHQAccount = new GarethMidwood\CodebaseHQ\CodebaseHQAccount(
 
 $system = new GarethMidwood\TicketReporting\System\CodebaseHQ($codebaseHQAccount);
 
-$period = new GarethMidwood\TicketReporting\Time\Period(new DateTime(), new DateTime('-1 days'));
+$period = new GarethMidwood\TicketReporting\System\TimeSession\Period(new DateTime(), new DateTime('-1 days'));
 
 // $users = $system->populateUserData();
-$projects=  $system->populateProjectData($period, 'creode');
+$system->populateProjectData($period, 'creode');
 
 
 $formatter = new GarethMidwood\TicketReporting\ReportFormat\Csv();

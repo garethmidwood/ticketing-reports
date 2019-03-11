@@ -1,6 +1,6 @@
 <?php 
 
-namespace GarethMidwood\TicketReporting\Time;
+namespace GarethMidwood\TicketReporting\System\TimeSession;
 
 class Period
 {

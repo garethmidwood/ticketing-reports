@@ -14,6 +14,6 @@
         }
     },
     "require": {
-        "garethmidwood/codebasehq-php": "1.0.0"
+        "garethmidwood/codebasehq-php": "^1.0.0"
     }
 }

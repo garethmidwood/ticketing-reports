@@ -2,8 +2,8 @@
 
 namespace GarethMidwood\TicketReporting\Report;
 
-use GarethMidwood\CodebaseHQ\Project\Project;
-use GarethMidwood\TicketReporting\Time\Period;
+use GarethMidwood\TicketReporting\System\Project\Project;
+use GarethMidwood\TicketReporting\System\TimeSession\Period;
 
 class ProjectOverview extends Report
 {
@@ -13,16 +13,16 @@ class ProjectOverview extends Report
 
         $projects = $this->system->projects();
 
-        var_dump($projects);
-
         echo 'gathering project data' . PHP_EOL;
 
         $data = [];
 
         foreach($projects as $project) {
             echo 'gathering data for ' . $project->getName() . PHP_EOL;
-            $this->gatherProjectData($project, $data);
+            $this->populateProjectData($project, $data);
         }
+
+        echo 'done gathering data' . PHP_EOL;
 
         return $data;
     }
@@ -32,8 +32,24 @@ class ProjectOverview extends Report
      * @param Project &$project 
      * @return type
      */
-    private function gatherProjectData(Project &$project, array &$data)
+    private function populateProjectData(Project &$project, array &$data)
     {
-        $data[] = ['name' => $project->getName()];
+        $tickets = $project->getTickets();
+
+        foreach($tickets as $ticket) {
+            $timeSessions = $ticket->getTimeSessions();
+
+            foreach($timeSessions as $timeSession) {
+                $data[] = [
+                    'projectId' => $project->getId(),
+                    'projectName' => $project->getName(),
+                    'ticketId' => $ticket->getId(),
+                    'ticketSummary' => $ticket->getSummary(),
+                    'timeMinutes' => $timeSession->getMinutes(),
+                    'timeMessage' => $timeSession->getSummary(),
+                    'timeUserFirstName' => ($timeSession->getUser() !== null) ? $timeSession->getUser()->getFirstName() : 'unknown'
+                ];
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@ namespace GarethMidwood\TicketReporting\Report;
 
 use GarethMidwood\TicketReporting\ReportFormat\ReportFormat;
 use GarethMidwood\TicketReporting\System\System;
-use GarethMidwood\TicketReporting\Time\Period;
+use GarethMidwood\TicketReporting\System\TimeSession\Period;
 
 abstract class Report
 {
