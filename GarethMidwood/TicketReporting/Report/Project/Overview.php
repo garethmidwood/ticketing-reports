@@ -1,29 +1,34 @@
 <?php
 
-namespace GarethMidwood\TicketReporting\Report;
+namespace GarethMidwood\TicketReporting\Report\Project;
 
+use GarethMidwood\TicketReporting\Report\Report;
 use GarethMidwood\TicketReporting\System\Project;
 use GarethMidwood\TicketReporting\System\Ticket;
 use GarethMidwood\TicketReporting\System\TimeSession;
 
-class ProjectOverview extends Report
+class Overview extends Report
 {
+    /**
+     * @inheritdoc
+     */
+    protected function getReportName() : string
+    {
+        return 'Project Overview Report';
+    }
+
+    /**
+     * @inheritdoc
+     */
     protected function gatherData(TimeSession\Period $period) : array
     {
-        echo 'getting projects' . PHP_EOL;
-
         $projects = $this->system->projects();
-
-        echo 'gathering project data' . PHP_EOL;
 
         $data = [];
 
         foreach($projects as $project) {
-            echo 'gathering data for ' . $project->getName() . PHP_EOL;
             $this->populateProjectData($project, $data);
         }
-
-        echo 'done gathering data' . PHP_EOL;
 
         return $data;
     }
@@ -70,6 +75,7 @@ class ProjectOverview extends Report
             'projectName' => $project->getName(),
             'ticketId' => $ticket->getId(),
             'ticketSummary' => $ticket->getSummary(),
+            'ticketStatus' => $ticket->getStatus()->getName(),
             'timeMinutes' => isset($timeSession) ? $timeSession->getMinutes() : null,
             'timeMessage' => isset($timeSession) ? $timeSession->getSummary() : null,
             'timeUserFirstName' => (isset($timeSession) && $timeSession->getUser() !== null) ? $timeSession->getUser()->getFirstName() : null,
