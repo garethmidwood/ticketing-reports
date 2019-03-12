@@ -11,7 +11,7 @@ $codebaseHQAccount = new GarethMidwood\CodebaseHQ\CodebaseHQAccount(
     $apiHost
 );
 
-$system = new GarethMidwood\TicketReporting\System\CodebaseHQ($codebaseHQAccount);
+$system = new GarethMidwood\TicketReporting\System\Adapter\CodebaseHQ($codebaseHQAccount);
 
 $period = new GarethMidwood\TicketReporting\System\TimeSession\Period(new DateTime(), new DateTime('-7 days'));
 

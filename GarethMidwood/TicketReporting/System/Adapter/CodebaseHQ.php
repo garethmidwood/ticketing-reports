@@ -1,6 +1,6 @@
 <?php
 
-namespace GarethMidwood\TicketReporting\System;
+namespace GarethMidwood\TicketReporting\System\Adapter;
 
 use GarethMidwood\CodebaseHQ\CodebaseHQAccount;
 use GarethMidwood\CodebaseHQ\Project as CodebaseProject;
@@ -12,12 +12,14 @@ use GarethMidwood\CodebaseHQ\TimeSession as CodebaseTimeSession;
 use GarethMidwood\CodebaseHQ\TimeSession\Period as CodebasePeriod;
 use GarethMidwood\CodebaseHQ\User as CodebaseUser;
 use GarethMidwood\TicketReporting\System\Project;
-use GarethMidwood\TicketReporting\System\User;
+use GarethMidwood\TicketReporting\System\System;
+use GarethMidwood\TicketReporting\System\Ticket;
 use GarethMidwood\TicketReporting\System\Ticket\Category;
 use GarethMidwood\TicketReporting\System\Ticket\Priority;
 use GarethMidwood\TicketReporting\System\Ticket\Status;
 use GarethMidwood\TicketReporting\System\Ticket\Type;
 use GarethMidwood\TicketReporting\System\TimeSession;
+use GarethMidwood\TicketReporting\System\User;
 
 class CodebaseHQ implements System
 {
