@@ -15,4 +15,23 @@ class Collection extends BaseCollection
     {
         $this->addItem($ticket->getId(), $ticket);
     }
+
+    /**
+     * Returns a collection of active tickets
+     * @return type
+     */
+    public function activeOnly() : Collection
+    {
+        $collection = new Collection();
+
+        foreach($this as $ticket) {
+            $status = $ticket->getStatus();
+
+            if (!$status->isClosed()) {
+                $collection->addTicket($ticket);
+            }
+        }
+
+        return $collection;
+    }
 }

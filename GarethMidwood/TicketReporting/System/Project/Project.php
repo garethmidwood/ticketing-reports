@@ -75,8 +75,8 @@ class Project
      * Gets the project tickets
      * @return Ticket\Collection
      */
-    public function getTickets() : Ticket\Collection
+    public function getTickets(bool $activeOnly = false) : Ticket\Collection
     {
-        return $this->tickets;
+        return $activeOnly ? $this->tickets->activeOnly() : $this->tickets;
     }
 }
