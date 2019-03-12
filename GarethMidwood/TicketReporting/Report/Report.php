@@ -42,7 +42,14 @@ abstract class Report
             throw new \Exception('Could not write file ' . $outFile);
         }
 
+        echo 'Generating ' . $this->getReportName() . PHP_EOL;
+
         $data = $this->gatherData($period);
+
+        if (empty($data)) {
+            echo 'No data to write for ' . $this->getReportName() . PHP_EOL;
+            return;
+        }
 
         $this->formatter->generate($outFile, $data);
     }
@@ -60,7 +67,7 @@ abstract class Report
             return mkdir($dir, 0755, true);
         }
 
-        return is_writable($outFile);
+        return (!file_exists($outFile) || is_writable($outFile));
     }
 
     /**
@@ -68,4 +75,10 @@ abstract class Report
      * @return array
      */
     protected abstract function gatherData(Period $period) : array;
+
+    /**
+     * Returns the report name for display
+     * @return string
+     */
+    protected abstract function getReportName() : string;
 }
