@@ -57,4 +57,22 @@ class Period
 
         return $interval->format('%a') <= 31 && $interval->format('%a') >= 28;
     }
+
+    /**
+     * Returns the start date for this period
+     * @return \DateTime
+     */
+    public function getStartDate()
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * Returns the end date for this period
+     * @return \DateTime
+     */
+    public function getEndDate()
+    {
+        return $this->endDate;
+    }
 }
