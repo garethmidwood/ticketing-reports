@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "garethmidwood/codebasehq-php",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/garethmidwood/codebasehq-php.git",
-                "reference": "b53587e8f2510d88e08d4995606e7d12a18e9de5"
+                "reference": "ead0fee85e48a03b34379703542900cb53d1442c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/garethmidwood/codebasehq-php/zipball/b53587e8f2510d88e08d4995606e7d12a18e9de5",
-                "reference": "b53587e8f2510d88e08d4995606e7d12a18e9de5",
+                "url": "https://api.github.com/repos/garethmidwood/codebasehq-php/zipball/ead0fee85e48a03b34379703542900cb53d1442c",
+                "reference": "ead0fee85e48a03b34379703542900cb53d1442c",
                 "shasum": ""
             },
             "type": "library",
@@ -35,7 +35,7 @@
                 }
             ],
             "description": "A PHP library for the CodebaseHQ API",
-            "time": "2019-03-11 21:51:38"
+            "time": "2019-03-12 20:58:05"
         }
     ],
     "packages-dev": [],

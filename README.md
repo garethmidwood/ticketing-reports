@@ -38,7 +38,7 @@ $system->populateProjectData($period, 'creode');
 $csvFormatter = new GarethMidwood\TicketReporting\ReportFormat\Csv();
 
 // Create the report you want to generate
-$projectOverviewReport = new GarethMidwood\TicketReporting\Report\ProjectOverview($system, $csvFormatter);
+$projectOverviewReport = new GarethMidwood\TicketReporting\Report\Project\Overview($system, $csvFormatter);
 // and then generate it, the first parameter is the file to be output and can be a relative or absolute path
 $projectOverviewReport->generate('reports/project-overview-report.csv', $period);
 ```
@@ -53,7 +53,7 @@ Once you've created a new system you can use it to generate a report, just like 
 $system = new You\Own\System\Class();
 $csvFormatter = new GarethMidwood\TicketReporting\ReportFormat\Csv();
 
-$projectOverviewReport = new GarethMidwood\TicketReporting\Report\ProjectOverview($system, $csvFormatter);
+$projectOverviewReport = new GarethMidwood\TicketReporting\Report\Project\Overview($system, $csvFormatter);
 $projectOverviewReport->generate('reports/project-overview-report.csv', $period);
 ```
 
