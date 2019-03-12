@@ -73,9 +73,8 @@ class CodebaseHQ implements System
         echo 'retrieved ' . $users->getCount() . ' total users' . PHP_EOL;
 
         foreach($users as $user) {
-            // TODO: Convert this system user into a local user for adding to collection
-            $normalisedUser = new User\User();
-            $this->user->addUser($normalisedUser);
+            $normalisedUser = $this->createNormalisedUser($user);
+            $this->users->addUser($normalisedUser);
         }
 
         return $users;
@@ -225,7 +224,7 @@ class CodebaseHQ implements System
     {
         $tickets = $this->createNormalisedTickets($project);
 
-        $project = new Project\Project(
+        $normalisedProject = new Project\Project(
             $project->getId(),
             $project->getName(),
             $project->getStatus(),
@@ -233,7 +232,7 @@ class CodebaseHQ implements System
             $tickets
         );
 
-        return $project;
+        return $normalisedProject;
     }    
     
     /**
@@ -303,7 +302,7 @@ class CodebaseHQ implements System
     {
         $normalisedUser = new User\User(
             $user->getId(),
-            $user->getName(),
+            $user->getUsername(),
             $user->getCompany(),
             $user->getEmailAddress(),
             $user->getFirstName(),

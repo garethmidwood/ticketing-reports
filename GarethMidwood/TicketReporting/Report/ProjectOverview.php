@@ -39,16 +39,30 @@ class ProjectOverview extends Report
         foreach($tickets as $ticket) {
             $timeSessions = $ticket->getTimeSessions();
 
-            foreach($timeSessions as $timeSession) {
+            if ($timeSessions->getCount() == 0) {
                 $data[] = [
                     'projectId' => $project->getId(),
                     'projectName' => $project->getName(),
                     'ticketId' => $ticket->getId(),
                     'ticketSummary' => $ticket->getSummary(),
-                    'timeMinutes' => $timeSession->getMinutes(),
-                    'timeMessage' => $timeSession->getSummary(),
-                    'timeUserFirstName' => ($timeSession->getUser() !== null) ? $timeSession->getUser()->getFirstName() : 'unknown'
+                    'timeMinutes' => '',
+                    'timeMessage' => '',
+                    'timeUserFirstName' => '',
+                    'timeUserLastName' => ''
                 ];
+            } else {
+                foreach($timeSessions as $timeSession) {
+                    $data[] = [
+                        'projectId' => $project->getId(),
+                        'projectName' => $project->getName(),
+                        'ticketId' => $ticket->getId(),
+                        'ticketSummary' => $ticket->getSummary(),
+                        'timeMinutes' => $timeSession->getMinutes(),
+                        'timeMessage' => $timeSession->getSummary(),
+                        'timeUserFirstName' => ($timeSession->getUser() !== null) ? $timeSession->getUser()->getFirstName() : 'unknown',
+                        'timeUserLastName' => ($timeSession->getUser() !== null) ? $timeSession->getUser()->getLastName() : 'unknown'
+                    ];
+                }
             }
         }
     }
