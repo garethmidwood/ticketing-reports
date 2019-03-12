@@ -340,7 +340,10 @@ class CodebaseHQ implements System
     {
         $normalisedPriority = new Priority\Priority(
             $priority->getId(),
-            $priority->getName()
+            $priority->getName(),
+            $priority->getColour(),
+            $priority->getDefault(),
+            $priority->getPosition()
         );
 
         return $normalisedPriority;
@@ -355,7 +358,10 @@ class CodebaseHQ implements System
     {
         $normalisedStatus = new Status\Status(
             $status->getId(),
-            $status->getName()
+            $status->getName(),
+            $status->getColour(),
+            $status->isClosed(),
+            $status->getOrder()
         );
 
         return $normalisedStatus;
