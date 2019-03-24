@@ -15,9 +15,11 @@ $system = new GarethMidwood\TicketReporting\System\Adapter\CodebaseHQ($codebaseH
 
 $period = new GarethMidwood\TicketReporting\System\TimeSession\Period(new DateTime(), new DateTime('-30 days'));
 
-// TODO: it should be possible to populate these from saved data, not just from API requests
 $system->populateUserData();
 $system->populateProjectData($period, 'creode');
+
+// TODO: The system data should be formatted for reporting and saved/cached.
+// Reports should be generated directly from the cached data, not from the results of an API request
 
 
 $csvFormatter = new GarethMidwood\TicketReporting\ReportFormat\Csv();
