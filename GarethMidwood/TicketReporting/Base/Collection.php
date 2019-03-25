@@ -40,7 +40,8 @@ abstract class Collection implements \IteratorAggregate
      * Returns array iterator
      * @return \ArrayIterator
      */
-    public function getIterator() {
+    public function getIterator()
+    {
         return new \ArrayIterator($this->items);
     }
 }
