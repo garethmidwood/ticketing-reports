@@ -15,7 +15,7 @@ $projects = unserialize($projectData);
 $csvFormatter = new GarethMidwood\TicketReporting\ReportFormat\Csv();
 $period =   new GarethMidwood\TicketReporting\System\TimeSession\Period(
                 new DateTime(),
-                new DateTime('-2 days')
+                new DateTime('-7 days')
             );
 
 

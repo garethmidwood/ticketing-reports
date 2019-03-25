@@ -46,12 +46,11 @@ class Overview extends Report
         foreach($tickets as $ticket) {
             $timeSessions = $ticket->getTimeSessions();
 
-            if ($timeSessions->getCount() == 0) {
-                $this->addDataRow($data, $project, $ticket);
-                continue;
-            }
-
             foreach ($timeSessions as $timeSession) {
+                if (!$period->inPeriod($timeSession->getSessionDate())) {
+                    continue;
+                }
+
                 $this->addDataRow($data, $project, $ticket, $timeSession);
             }
         }

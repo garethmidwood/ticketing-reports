@@ -52,8 +52,7 @@ class TicketStatus extends Report
                 $ticketDateTime = $ticket->getCreatedAt();
             }
 
-            if ($ticketDateTime->getTimestamp() < $period->getStartDate()->getTimestamp()
-                || $ticketDateTime->getTimestamp() > $period->getEndDate()->getTimestamp()) {
+            if (!$period->inPeriod($ticketDateTime)) {
                 continue;
             }
 

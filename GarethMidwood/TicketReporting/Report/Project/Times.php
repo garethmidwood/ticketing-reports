@@ -42,7 +42,7 @@ class Times extends Report
         array &$data
     ) {
         $tickets = $project->getTickets();
-
+ 
         foreach($tickets as $ticket) {
             $timeSessions = $ticket->getTimeSessions();
 
@@ -51,6 +51,10 @@ class Times extends Report
             }
 
             foreach ($timeSessions as $timeSession) {
+                if (!$period->inPeriod($timeSession->getSessionDate())) {
+                    continue;
+                }
+
                 $this->addDataRow($data, $project, $ticket, $timeSession);
             }
         }
@@ -76,6 +80,7 @@ class Times extends Report
             'ticketId' => $ticket->getId(),
             'ticketSummary' => $ticket->getSummary(),
             'timeMinutes' => isset($timeSession) ? $timeSession->getMinutes() : null,
+            'timeDate' => isset($timeSession) ? $timeSession->getSessionDate()->format('Y-m-d') : null,
             'timeMessage' => isset($timeSession) ? $timeSession->getSummary() : null,
             'timeUserFirstName' => (isset($timeSession) && $timeSession->getUser() !== null) ? $timeSession->getUser()->getFirstName() : null,
             'timeUserLastName' => (isset($timeSession) && $timeSession->getUser() !== null) ? $timeSession->getUser()->getLastName() : null

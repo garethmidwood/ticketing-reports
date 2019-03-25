@@ -75,4 +75,14 @@ class Period
     {
         return $this->endDate;
     }
+
+    /**
+     * Returns true if supplied date is within this period
+     * @param \DateTime $datetime 
+     * @return bool
+     */
+    public function inPeriod(\DateTime $datetime) : bool
+    {
+        return ($datetime >= $this->startDate && $datetime <= $this->endDate);
+    }
 }
