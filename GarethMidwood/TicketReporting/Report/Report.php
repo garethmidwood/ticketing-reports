@@ -5,13 +5,19 @@ namespace GarethMidwood\TicketReporting\Report;
 use GarethMidwood\TicketReporting\ReportFormat\ReportFormat;
 use GarethMidwood\TicketReporting\System\System;
 use GarethMidwood\TicketReporting\System\TimeSession\Period;
+use GarethMidwood\TicketReporting\System\User;
+use GarethMidwood\TicketReporting\System\Project;
 
 abstract class Report
 {
     /**
-     * @var System
+     * @var User\Collection
      */
-    protected $system;
+    protected $users;
+    /**
+     * @var Project\Collection
+     */
+    protected $projects;
     /**
      * @var ReportFormat
      */
@@ -19,13 +25,18 @@ abstract class Report
 
     /**
      * Constructor
-     * @param System $system 
+     * @param User\Collection $users
+     * @param Project\Collection $projects 
      * @param ReportFormat $formatter
      * @return void
      */
-    public function __construct(System &$system, ReportFormat $formatter)
-    {
-        $this->system = $system;
+    public function __construct(
+        User\Collection $users,
+        Project\Collection $projects,
+        ReportFormat $formatter
+    ) {
+        $this->users = $users;
+        $this->projects = $projects;
         $this->formatter = $formatter;
     }
 
@@ -50,6 +61,8 @@ abstract class Report
             echo 'No data to write for ' . $this->getReportName() . PHP_EOL;
             return;
         }
+
+        echo ' writing ' . count($data) . ' rows' . PHP_EOL;
 
         $this->formatter->generate($outFile, $data);
     }

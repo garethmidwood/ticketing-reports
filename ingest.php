@@ -12,23 +12,20 @@ $codebaseHQAccount = new GarethMidwood\CodebaseHQ\CodebaseHQAccount(
 );
 
 $system = new GarethMidwood\TicketReporting\System\Adapter\CodebaseHQ($codebaseHQAccount);
-
 $period = new GarethMidwood\TicketReporting\System\TimeSession\Period(new DateTime(), new DateTime('-30 days'));
 
+// retrieve the data from the system
 $system->populateUserData();
 $system->populateProjectData($period, 'creode');
 
-// TODO: The system data should be formatted for reporting and saved/cached.
-// Reports should be generated directly from the cached data, not from the results of an API request
 
 
-$csvFormatter = new GarethMidwood\TicketReporting\ReportFormat\Csv();
 
-$projectOverviewReport = new GarethMidwood\TicketReporting\Report\Project\Overview($system, $csvFormatter);
-$projectOverviewReport->generate('reports/data/project-overview-report.csv', $period);
+// we'll serialize the data for writing to file
+$userData = serialize($system->users());
+$projectData = serialize($system->projects());
 
-$projectTimesReport = new GarethMidwood\TicketReporting\Report\Project\Times($system, $csvFormatter);
-$projectTimesReport->generate('reports/data/project-times-report.csv', $period);
+// write the saved data to file, to be used to generate reports
+file_put_contents('reports/data/users.txt', $userData);
+file_put_contents('reports/data/projects.txt', $projectData);
 
-$projectTimesReport = new GarethMidwood\TicketReporting\Report\Project\TicketStatus($system, $csvFormatter);
-$projectTimesReport->generate('reports/data/project-ticketstatus-report.csv', $period);
