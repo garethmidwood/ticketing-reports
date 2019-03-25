@@ -22,24 +22,25 @@ class Times extends Report
      */
     protected function gatherData(TimeSession\Period $period) : array
     {
-        $projects = $this->system->projects();
-
         $data = [];
 
-        foreach($projects as $project) {
-            $this->populateProjectData($project, $data);
+        foreach($this->projects as $project) {
+            $this->populateProjectData($project, $period, $data);
         }
 
         return $data;
     }
 
     /**
-     * Populates data for a project, returns the 
+     * Populates data for a project
      * @param Project\Project &$project 
      * @return type
      */
-    private function populateProjectData(Project\Project &$project, array &$data)
-    {
+    private function populateProjectData(
+        Project\Project &$project,
+        TimeSession\Period $period,
+        array &$data
+    ) {
         $tickets = $project->getTickets();
 
         foreach($tickets as $ticket) {

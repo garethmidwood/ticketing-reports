@@ -22,11 +22,9 @@ class TicketStatus extends Report
      */
     protected function gatherData(TimeSession\Period $period) : array
     {
-        $projects = $this->system->projects();
-
         $data = [];
 
-        foreach($projects as $project) {
+        foreach($this->projects as $project) {
             $this->populateProjectData($project, $period, $data);
         }
 
@@ -34,13 +32,16 @@ class TicketStatus extends Report
     }
 
     /**
-     * Populates data for a project, returns the 
+     * Populates data for a project
      * @param Project\Project &$project 
      * @param TimeSession\Period $period
      * @return type
      */
-    private function populateProjectData(Project\Project &$project, TimeSession\Period $period, array &$data)
-    {
+    private function populateProjectData(
+        Project\Project &$project, 
+        TimeSession\Period $period,
+        array &$data
+    ) {
         $tickets = $project->getTickets();
 
         foreach($tickets as $ticket) {
