@@ -28,8 +28,25 @@ class CodebaseHQ implements System
      */
     private $codebaseHQ;
 
+    /**
+     * @var User\Collection
+     */
     private $users;
+    
+    /**
+     * @var Project\Collection
+     */
     private $projects;
+
+    /**
+     * @var CodebaseUser\Collection
+     */
+    private $codebaseUsers;
+    
+    /**
+     * @var CodebaseProject\Collection
+     */
+    private $codebaseProjects;
 
     /**
      * Constructor
@@ -50,6 +67,15 @@ class CodebaseHQ implements System
      */
     public function users() : User\Collection
     {
+        if ($this->users->getCount() > 0) {
+            return $this->users;
+        }
+
+        foreach($this->codebaseUsers as $user) {
+            $normalisedUser = $this->createNormalisedUser($user);
+            $this->users->addUser($normalisedUser);
+        }
+
         return $this->users;
     }
 
@@ -59,6 +85,15 @@ class CodebaseHQ implements System
      */
     public function projects() : Project\Collection
     {
+        if ($this->projects->getCount() > 0) {
+            return $this->projects;
+        }
+
+        foreach($this->codebaseProjects as $project) {
+            $normalisedProject = $this->createNormalisedProject($project);
+            $this->projects->addProject($normalisedProject);
+        }
+
         return $this->projects;
     }
 
@@ -70,16 +105,9 @@ class CodebaseHQ implements System
     {
         echo 'gathering user data' . PHP_EOL;
 
-        $users = $this->codebaseHQ->users();
+        $this->codebaseUsers = $this->codebaseHQ->users();
 
-        echo 'retrieved ' . $users->getCount() . ' total users' . PHP_EOL;
-
-        foreach($users as $user) {
-            $normalisedUser = $this->createNormalisedUser($user);
-            $this->users->addUser($normalisedUser);
-        }
-
-        return $users;
+        echo 'retrieved ' . $this->codebaseUsers->getCount() . ' total users' . PHP_EOL;
     }
 
     /**
@@ -98,14 +126,14 @@ class CodebaseHQ implements System
 
         if (isset($projectName)) {
             echo 'looking for specific project - ' . $projectName . PHP_EOL;
-            $projectCollection = [$this->codebaseHQ->project($projectName)];
+            $this->codebaseProjects = [$this->codebaseHQ->project($projectName)];
         } else {
-            $projectCollection = $this->codebaseHQ->projects();
+            $this->codebaseProjects = $this->codebaseHQ->projects();
         }
 
         echo 'gathering project data' . PHP_EOL;
 
-        foreach($projectCollection as $project) {
+        foreach($this->codebaseProjects as $project) {
             echo 'populating categories for ' . $project->getName() . PHP_EOL;
             $this->populateCategories($project);
             echo 'populating priorities for ' . $project->getName() . PHP_EOL;
@@ -118,12 +146,7 @@ class CodebaseHQ implements System
             $this->populateTickets($project);
             echo 'populating times for ' . $project->getName() . PHP_EOL;
             $this->populateTimes($project, $codebasePeriod);
-
-            $normalisedProject = $this->createNormalisedProject($project);
-            $this->projects->addProject($normalisedProject);
         }
-
-        return $projectCollection;
     }
 
     /**
