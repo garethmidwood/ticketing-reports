@@ -126,7 +126,8 @@ class CodebaseHQ implements System
 
         if (isset($projectName)) {
             echo 'looking for specific project - ' . $projectName . PHP_EOL;
-            $this->codebaseProjects = [$this->codebaseHQ->project($projectName)];
+            $this->codebaseProjects = new CodebaseProject\Collection();
+            $this->codebaseProjects->addProject($this->codebaseHQ->project($projectName));
         } else {
             $this->codebaseProjects = $this->codebaseHQ->projects();
         }
@@ -249,12 +250,17 @@ class CodebaseHQ implements System
     {
         $tickets = $this->createNormalisedTickets($project);
 
+        $timeSessions = $project->getTimeSessions() ? 
+            $this->createNormalisedTimeSessions($project->getId(), null, $project->getTimeSessions()) :
+            null;
+
         $normalisedProject = new Project\Project(
             $project->getId(),
             $project->getName(),
             $project->getStatus(),
             $project->getPermalink(),
-            $tickets
+            $tickets,
+            $timeSessions
         );
 
         return $normalisedProject;
@@ -292,7 +298,11 @@ class CodebaseHQ implements System
                         $this->createNormalisedType($codebaseTicket->getType()) :
                         null;
             $timeSessions = $codebaseTicket->getTimeSessions() ? 
-                        $this->createNormalisedTimeSessions($codebaseTicket->getTimeSessions()) :
+                        $this->createNormalisedTimeSessions(
+                            $codebaseTicket->getProjectId(),
+                            $codebaseTicket->getId(),
+                            $codebaseTicket->getTimeSessions()
+                        ) :
                         null;
 
             $ticket = new Ticket\Ticket(
@@ -407,11 +417,16 @@ class CodebaseHQ implements System
 
     /**
      * Converts system time session collection into normalised collection
+     * @param int $projectId
+     * @param int $ticketId
      * @param CodebaseTimeSession\Collection $collection 
      * @return TimeSession\Collection
      */
-    private function createNormalisedTimeSessions(CodebaseTimeSession\Collection $collection) : TimeSession\Collection
-    {
+    private function createNormalisedTimeSessions(
+        int $projectId,
+        int $ticketId = null,
+        CodebaseTimeSession\Collection $collection
+    ) : TimeSession\Collection {
         $normalisedTimeSessionCollection = new TimeSession\Collection();
 
         foreach($collection as $timeSession) {
@@ -427,7 +442,9 @@ class CodebaseHQ implements System
                     $timeSession->getSessionDate(),
                     $user,
                     $timeSession->getUpdatedAt(),
-                    $timeSession->getCreatedAt()
+                    $timeSession->getCreatedAt(),
+                    $projectId,
+                    $ticketId
                 )
             );
         }

@@ -18,49 +18,6 @@ class TicketStatus extends Report
     }
 
     /**
-     * @inheritdoc
-     */
-    protected function gatherData(TimeSession\Period $period) : array
-    {
-        $data = [];
-
-        foreach($this->projects as $project) {
-            $this->populateProjectData($project, $period, $data);
-        }
-
-        return $data;
-    }
-
-    /**
-     * Populates data for a project
-     * @param Project\Project &$project 
-     * @param TimeSession\Period $period
-     * @return type
-     */
-    private function populateProjectData(
-        Project\Project &$project, 
-        TimeSession\Period $period,
-        array &$data
-    ) {
-        $tickets = $project->getTickets();
-
-        foreach($tickets as $ticket) {
-            $ticketDateTime = $ticket->getUpdatedAt();
-
-            // if it's not been updated then use the creation date
-            if (!isset($ticketDateTime)) {
-                $ticketDateTime = $ticket->getCreatedAt();
-            }
-
-            if (!$period->inPeriod($ticketDateTime)) {
-                continue;
-            }
-
-            $this->addDataRow($data, $project, $ticket);
-        }
-    }
-
-    /**
      * Adds a row of data to the csv
      * @param array &$data 
      * @param Project\Project $project 
@@ -95,5 +52,19 @@ class TicketStatus extends Report
             'overEstimate' => (int)$overEstimate,
             'needsAttention' => ($overEstimate && !$ticket->getStatus()->isClosed() ? 1 : 0)
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function generateHtmlBody() : string
+    {
+        $output = '';
+
+        foreach($this->data->getProjects() as $project) {
+            $output .= '<h2>' . $project->getName() . '</h2>';
+        }
+
+        return $output;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace GarethMidwood\TicketReporting\System\User;
 
-// use GarethMidwood\CodebaseHQ\System\TimeSession;
+use GarethMidwood\TicketReporting\System\TimeSession;
 
 class User 
 {
@@ -17,7 +17,7 @@ class User
     /**
      * @var TimeSession\Collection
      */
-    // private $timeSessionCollection;
+    private $timeSessionCollection;
 
     /**
      * Constructor
@@ -50,7 +50,7 @@ class User
         $this->gravatarUrl = $gravatarUrl;
         $this->enabled = $enabled;
 
-        // $this->timeSessionCollection = new TimeSession\Collection();
+        $this->timeSessionCollection = new TimeSession\Collection();
     }
 
     /**
@@ -129,20 +129,20 @@ class User
      * Returns time session collection
      * @return TimeSession\Collection
      */
-    // public function getTimeSessions()
-    // {
-    //     return $this->timeSessionCollection;
-    // }
+    public function getTimeSessions()
+    {
+        return $this->timeSessionCollection;
+    }
 
     /**
      * Adds a time session to this user
      * @param TimeSession\TimeSession $timeSession
      * @return Ticket
      */
-    // public function addTimeSession(TimeSession\TimeSession $timeSession)
-    // {
-    //     $this->timeSessionCollection->addTimeSession($timeSession);
+    public function addTimeSession(TimeSession\TimeSession $timeSession)
+    {
+        $this->timeSessionCollection->addTimeSession($timeSession);
 
-    //     return $this;
-    // }
+        return $this;
+    }
 }

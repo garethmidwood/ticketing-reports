@@ -18,49 +18,6 @@ class Times extends Report
     }
 
     /**
-     * @inheritdoc
-     */
-    protected function gatherData(TimeSession\Period $period) : array
-    {
-        $data = [];
-
-        foreach($this->projects as $project) {
-            $this->populateProjectData($project, $period, $data);
-        }
-
-        return $data;
-    }
-
-    /**
-     * Populates data for a project
-     * @param Project\Project &$project 
-     * @return type
-     */
-    private function populateProjectData(
-        Project\Project &$project,
-        TimeSession\Period $period,
-        array &$data
-    ) {
-        $tickets = $project->getTickets();
- 
-        foreach($tickets as $ticket) {
-            $timeSessions = $ticket->getTimeSessions();
-
-            if ($timeSessions->getCount() == 0) {
-                continue;
-            }
-
-            foreach ($timeSessions as $timeSession) {
-                if (!$period->inPeriod($timeSession->getSessionDate())) {
-                    continue;
-                }
-
-                $this->addDataRow($data, $project, $ticket, $timeSession);
-            }
-        }
-    }
-
-    /**
      * Adds a row of data to the csv
      * @param array &$data 
      * @param Project\Project $project 
@@ -85,5 +42,19 @@ class Times extends Report
             'timeUserFirstName' => (isset($timeSession) && $timeSession->getUser() !== null) ? $timeSession->getUser()->getFirstName() : null,
             'timeUserLastName' => (isset($timeSession) && $timeSession->getUser() !== null) ? $timeSession->getUser()->getLastName() : null
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function generateHtmlBody() : string
+    {
+        $output = '';
+
+        foreach($this->data->getProjects() as $project) {
+            $output .= '<h2>' . $project->getName() . '</h2>';
+        }
+
+        return $output;
     }
 }

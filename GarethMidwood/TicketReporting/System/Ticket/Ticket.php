@@ -179,6 +179,18 @@ class Ticket
     }
 
     /**
+     * Gets Ticket last updated date
+     * @return \DateTime
+     */
+    public function getLastUpdatedAt() {
+        if (isset($this->updatedAt)) { 
+            return $this->updatedAt;
+        }
+
+        return $this->createdAt;
+    }
+
+    /**
      * Returns time session collection
      * @return TimeSession\Collection
      */

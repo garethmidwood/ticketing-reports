@@ -11,33 +11,18 @@ use GarethMidwood\TicketReporting\System\Project;
 abstract class Report
 {
     /**
-     * @var User\Collection
+     * @var Data
      */
-    protected $users;
-    /**
-     * @var Project\Collection
-     */
-    protected $projects;
-    /**
-     * @var ReportFormat
-     */
-    protected $formatter;
+    protected $data;
 
     /**
      * Constructor
-     * @param User\Collection $users
-     * @param Project\Collection $projects 
-     * @param ReportFormat $formatter
+     * @param Data $data
      * @return void
      */
-    public function __construct(
-        User\Collection $users,
-        Project\Collection $projects,
-        ReportFormat $formatter
-    ) {
-        $this->users = $users;
-        $this->projects = $projects;
-        $this->formatter = $formatter;
+    public function __construct(Data $data)
+    {
+        $this->data = $data;
     }
 
     /**
@@ -47,7 +32,7 @@ abstract class Report
      * @throws \Exception
      * @return void
      */
-    public function generate(string $outFile, Period $period)
+    public function generate(string $outFile)
     {
         if (!$this->prepForFileWrite($outFile)) {
             throw new \Exception('Could not write file ' . $outFile);
@@ -55,16 +40,9 @@ abstract class Report
 
         echo 'Generating ' . $this->getReportName() . PHP_EOL;
 
-        $data = $this->gatherData($period);
+        $data = $this->generateHtml();
 
-        if (empty($data)) {
-            echo 'No data to write for ' . $this->getReportName() . PHP_EOL;
-            return;
-        }
-
-        echo ' writing ' . count($data) . ' rows' . PHP_EOL;
-
-        $this->formatter->generate($outFile, $data);
+        $this->writeOutFile($outFile, $data);
     }
 
     /**
@@ -84,14 +62,70 @@ abstract class Report
     }
 
     /**
-     * Gathers the data, returns it as an array
-     * @return array
+     * Writes the output file with the given data
+     * @param string $outFile 
+     * @param string $data 
+     * @return void
      */
-    protected abstract function gatherData(Period $period) : array;
+    private function writeOutFile(string $outFile, string $data)
+    {
+        if (empty($data)) {
+            echo 'No data to write for ' . $this->getReportName() . PHP_EOL;
+            return;
+        }
+
+        file_put_contents($outFile, $data);
+    }
 
     /**
      * Returns the report name for display
      * @return string
      */
     protected abstract function getReportName() : string;
+
+    /**
+     * Generates the report as HTML
+     * @param Period $period 
+     * @return string
+     */
+    protected abstract function generateHtmlBody() : string;
+
+    /**
+     * Generates the report HTML, including calling the body generation method from the implementing class
+     */
+    protected function generateHtml() : string
+    {
+        $output = '<html><head><script src="sorttable.js" type="text/javascript"></script></head><body>';
+
+        $output .= $this->generateReportFrontPage();
+
+        $output .= $this->generateHtmlBody();
+
+        $output .= $this->generateHtmlFooter();
+
+        $output .= '</body></html>';
+
+        return $output;
+    }
+
+    /**
+     * Generates the front page of the report
+     * @return string
+     */
+    private function generateReportFrontPage()
+    {
+        $period = $this->data->getPeriod();
+
+        return '<h1>' . $this->getReportName() . '</h1><h2>' . $period->getStartDate()->format('d-m-Y') . ' - ' . $period->getEndDate()->format('d-m-Y') . '</h2>';
+    }
+
+    /**
+     * Generates the footer of the report
+     * @return string
+     */
+    private function generateHtmlFooter() 
+    {
+        $now = new \DateTime();
+        return '<footer>report generated on ' . $now->format('d-m-Y') . ' at ' . $now->format('H:i:s') . '</footer>';
+    }
 }

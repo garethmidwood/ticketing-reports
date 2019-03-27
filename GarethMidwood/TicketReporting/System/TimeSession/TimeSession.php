@@ -13,6 +13,8 @@ class TimeSession
     private $user;
     private $updatedAt;
     private $createdAt;
+    private $projectId;
+    private $ticketId;
 
     /**
      * Constructor
@@ -23,6 +25,8 @@ class TimeSession
      * @param User\User $user
      * @param \DateTime $updatedAt 
      * @param \DateTime $createdAt
+     * @param int $projectId
+     * @param int $ticketId
      * @return void
      */
     public function __construct(
@@ -32,7 +36,9 @@ class TimeSession
         \DateTime $sessionDate,
         User\User $user = null,
         \DateTime $updatedAt,
-        \DateTime $createdAt
+        \DateTime $createdAt,
+        int $projectId,
+        int $ticketId = null
     ) {
         $this->id = $id;
         $this->summary = $summary;
@@ -41,6 +47,8 @@ class TimeSession
         $this->user = $user;
         $this->updatedAt = $updatedAt;
         $this->createdAt = $createdAt;
+        $this->projectId = $projectId;
+        $this->ticketId = $ticketId;
     }
 
     /**
@@ -97,5 +105,21 @@ class TimeSession
      */
     public function getCreatedAt() {
         return $this->createdAt;
+    }
+
+    /**
+     * Gets Ticket ID
+     * @return int|null
+     */
+    public function getTicketId() {
+        return $this->ticketId;
+    }
+
+    /**
+     * Gets Project ID
+     * @return int
+     */
+    public function getProjectId() {
+        return $this->projectId;
     }
 }
